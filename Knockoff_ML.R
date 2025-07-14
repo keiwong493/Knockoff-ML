@@ -18,7 +18,7 @@ sparse.cov.cross <- function(x,y){
   list(cov=covmat)
 }
 
-create.MK.original.new <- function(X,M=5,corr_max=0.75) {
+create.MK.original <- function(X,M=5,corr_max=0.75) {
   
   X <- as.matrix(X)
   sparse.fit <- sparse.cor(X)
@@ -113,23 +113,11 @@ generate_knockoff <- function(X,M=5,maxld=0.75,corr_max=0.75,seed=12345,subsampl
     }
   }
   X<-as.matrix(X)
-  #Randomly select one item from each cluster
-  corX0<-sparse.cor(X)$cor
-  corX0[is.na(corX0)] <- 0
-  Sigma.distance = as.dist(1 - abs(corX0))
-  fit = hclust(Sigma.distance, method = "single")
-  clusters = cutree(fit, h = 1 - maxld)
-  df<-data.frame(ind=1:ncol(X),clusters)
-  rm(corX0)
-  index<-df %>%
-    group_by(clusters) %>%
-    slice_sample(n = 1) %>%
-    pull(ind)
-  if (length(index)>0){
-    X<-X[,index]
-  }
+  
   #generate knockoff
-  X_MK<-create.MK.original.new(X,M=M,corr_max=corr_max)
+  X_MK<-create.MK.original(X,M=M,corr_max=corr_max)
+
+  #subsample for faster shap values calculation
   if(subsample){
     library(irlba)
     X<-as.matrix(X)
@@ -250,6 +238,8 @@ Get_select_info<-function(T_0,T_K,M=5,fdr=0.1){
                      kappa=out$kappatau[,1],
                      tau=out$kappatau[,2],
                      w=as.vector(out$w),
+                     q=as.vector(out$q),
+                     threshold.w=thr.w
                      select=FALSE)
   output$select[highlight]<-TRUE
   return(output)
