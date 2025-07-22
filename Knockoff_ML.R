@@ -234,15 +234,15 @@ MK.q.byStat<-function (kappa,tau,M){
 }
 
 Get_select_info<-function(Feature_name,T_0,T_K,M=5,fdr=0.1){
-  out<-calculate_w_kappatau(T_0,T_k,M=M)
+  out<-calculate_w_kappatau(T_0,T_K,M=M)
   thr.w<-MK.threshold.byStat(out$kappatau[,1],out$kappatau[,2],M=M,fdr=fdr)
   highlight<-which(out$w>=thr.w)
-  output<-data.frame(Feature=Feature_name,
+  output<-data.frame(feature=Feature_name,
                      kappa=out$kappatau[,1],
                      tau=out$kappatau[,2],
                      w=as.vector(out$w),
                      q=as.vector(out$q),
-                     threshold.w=thr.w
+                     threshold.w=thr.w,
                      select=FALSE)
   output$select[highlight]<-TRUE
   return(output)
@@ -255,7 +255,7 @@ X <- read.csv("your_file_path")
 X_mk <- generate_knockoff(X,M=5,corr_max=0.75,scaled=FALSE,seed=12345,subsample=TRUE)
 
 #Feature selection with FDR control
-#feature name shoule be in the same order with feature importance
+#feature name should be in the same order with feature importance
 #T_0 feature importance of original dataset
 #T_k feature importance of knockoff datasets                                
 Feture_info <- Get_select_info(Feature_name,T_0,T_K,M=5,fdr=0.1)
