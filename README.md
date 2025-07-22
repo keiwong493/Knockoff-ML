@@ -8,5 +8,5 @@ Knockoff_ML_FI.ipynb: python codes for feature importance calculation using SHAP
 **Step1:** Generate multiple knockoffs using generate_knockoff function in the Knockoff_ML.R file.<br/>
 **Step2:** Compute feature imporatnce using functions in the Knockoff_ML_FI.ipynb file. <br/>
 Note: Knockoff-ML is a flexible framework that can incorporate various type of machine learning models, you can choose any machine learning models suitable for your work.<br/>
-**Step3:** Identify features using Get_select_info function in the Knockoff_ML.R file.<br/>
+**Step3:** Identify features with FDR control using Get_select_info function in the Knockoff_ML.R file.<br/>
 **Step4:** Train prediction models using identified features by Knockoff-ML.
