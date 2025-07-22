@@ -105,13 +105,16 @@ create.MK.original <- function(X,M=5,corr_max=0.75) {
   return(X_k)
 }
 
-generate_knockoff <- function(X,M=5,maxld=0.75,corr_max=0.75,seed=12345,subsample=TRUE){
+generate_knockoff <- function(X,M=5,corr_max=0.75,scaled=FALSE,seed=12345,subsample=TRUE){
   #scale continuous variables
-  for(i in 1:ncol(X)){
-    if (length(unique(X[,i])) > 2) {
-      X[,i] <- as.vector(scale(X[,i]))
+  if(!scaled){
+    for(i in 1:ncol(X)){
+      if (length(unique(X[,i])) > 2) {
+        X[,i] <- as.vector(scale(X[,i]))
+      }
     }
   }
+  
   X<-as.matrix(X)
   
   #generate knockoff
@@ -230,11 +233,11 @@ MK.q.byStat<-function (kappa,tau,M){
   return(q)
 }
 
-Get_select_info<-function(T_0,T_K,M=5,fdr=0.1){
+Get_select_info<-function(Feature_name,T_0,T_K,M=5,fdr=0.1){
   out<-calculate_w_kappatau(T_0,T_k,M=M)
   thr.w<-MK.threshold.byStat(out$kappatau[,1],out$kappatau[,2],M=M,fdr=fdr)
   highlight<-which(out$w>=thr.w)
-  output<-data.frame(index=1:length(T_0),
+  output<-data.frame(Feature=Feature_name,
                      kappa=out$kappatau[,1],
                      tau=out$kappatau[,2],
                      w=as.vector(out$w),
@@ -244,3 +247,15 @@ Get_select_info<-function(T_0,T_K,M=5,fdr=0.1){
   output$select[highlight]<-TRUE
   return(output)
 }
+
+#example
+#load original data
+X<-read.csv("your_file_path")  
+#generate multiple knockoffs                                 
+X_mk < -generate_knockoff(X,M=5,corr_max=0.75,scaled=FALSE,seed=12345,subsample=TRUE)
+
+#Feature selection with FDR control
+#feature name shoule be in the same order with feature importance
+#T_0 feature importance of original dataset
+#T_k feature importance of knockoff datasets                                
+Feture_info<-Get_select_info(Feature_name,T_0,T_K,M=5,fdr=0.1)
