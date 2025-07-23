@@ -100,8 +100,6 @@ y = pd.read_csv('/Data/y_dict.csv')
 
 #Train prediction models and return prediction results
 koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True, colpath='/Data',outpath='/Data')
-
-
 ```
 - **X:** Original dataset. <br/>
 - **y:** Outcome of interest.<br/>
