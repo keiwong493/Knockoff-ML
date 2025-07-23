@@ -247,15 +247,3 @@ Get_select_info<-function(Feature_name,T_0,T_K,M=5,fdr=0.1){
   output$select[highlight]<-TRUE
   return(output)
 }
-
-#example
-#load original data
-X <- read.csv("your_file_path")  
-#generate multiple knockoffs                                 
-X_mk <- generate_knockoff(X,M=5,corr_max=0.75,scaled=FALSE,seed=12345,subsample=TRUE)
-
-#Feature selection with FDR control
-#feature name should be in the same order with feature importance
-#T_0 feature importance of original dataset
-#T_k feature importance of knockoff datasets                                
-Feture_info <- Get_select_info(Feature_name,T_0,T_K,M=5,fdr=0.1)
