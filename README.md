@@ -1,9 +1,9 @@
 # Knockoff-ML: A knockoff-based machine learning framework for controlled variable selection and risk prediction in EHR data.<br/>
-## Overview:
-* First, Knockoff-ML generates multiple knockoffs using the sequential conditional independent tuples (SCIT) algorithm. Next, both the original and knockoff datasets are fed into ML models. Following this, Knockoff-ML computes feature importance (FI) for each feature using SHapley Additive exPlanation (SHAP) values. Then Knockoff-ML calculates knockoff statistics and identify key features with false discovery rate (FDR) control. Finally, Knockoff-ML trains risk prediction models with identified key features.
+## Overview
+* Knockoff-ML first generates multiple knockoffs using the sequential conditional independent tuples (SCIT) algorithm. Next, both the original and knockoff datasets are fed into ML models of choice. Knockoff-ML then computes feature importance (FI) for each feature in all models using SHapley Additive exPlanation (SHAP) values. Knockoff-ML then calculates knockoff statistics and identify key features with false discovery rate (FDR) control. Finally, Knockoff-ML trains risk prediction models with identified key features. We illustrate the workflow for Knockoff-ML as follows.
 ![flowchart2](https://github.com/user-attachments/assets/7c8373e5-4ee0-49d2-bacc-0a539304528d)
 ---
-## Repo Contents:
+## Repo Contents
 * `Knockoff-ML.R`: R scripts for generating multiple knockoffs and calculating knockoff statistics for controlled variable selection.
 * `Knockoff-ML_FI.ipynb`: Python notebook for computing feature importance, leveraging SHAP values.
 * `Knockoff-ML_Prediction.ipynb`: Python notebook for risk prediction with features identified by Knockoff-ML.
@@ -11,7 +11,7 @@
 
 ---
 
-## Workflow Steps:
+## Workflow
 **Step1:** Generate multiple knockoffs using `generate_knockoff` function from `Knockoff-ML.R` file.<br/>
 ```bash
 #load data
