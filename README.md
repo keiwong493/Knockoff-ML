@@ -12,7 +12,7 @@
 ---
 
 ## Workflow Steps:
-**Step1:** Generate multiple knockoffs using `generate_knockoff` function from `Knockoff_ML.R` file.<br/>
+**Step1:** Generate multiple knockoffs using `generate_knockoff` function from `Knockoff-ML.R` file.<br/>
 ```bash
 #load data
 X <- read.csv('/Data/X.csv')
