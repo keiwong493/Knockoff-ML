@@ -122,10 +122,10 @@ koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True,
 - **colpath:** Path to feature selection information obtained in **Step3**.<br/>
 - **outpath:** Path to save prediction results.<br/>
 
-## Example data:
+## Example data
 Note that data access to the MIMIC IV need Data Use Agreement with PhysioNet. We are unable to provide the datasets directly in this repository. However, for your convenience, we've included an example dataset in the `Data.zip` file. You can use this example data to reproduce and test the workflow demonstrated in our code.
 
-## Dependencies:
+## Dependencies
 The code should run with the following environment.
 
 "R version 4.4.1", "Matrix 1.7.0".
