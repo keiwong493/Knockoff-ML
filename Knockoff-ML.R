@@ -240,7 +240,6 @@ Get_select_info<-function(Feature_name,T_0,T_K,M=5,fdr=0.1){
   output<-data.frame(Feature=Feature_name,
                      w=as.vector(out$w),
                      q=as.vector(out$q),
-                     threshold.w=thr.w,
                      select=FALSE)
   output$select[highlight]<-TRUE
   return(output)
