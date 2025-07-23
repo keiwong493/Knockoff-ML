@@ -18,7 +18,7 @@
 X <- read.csv('/Data/X.csv')
 #generate knockoffs
 M <- 5
-X_mk <- generate_knockoff(X, M, scaled=TRUE, subsample=TRUE)
+X_mk <- generate_knockoff(X=X, M=M, scaled=TRUE, subsample=TRUE)
 #write knockoffs and index
 for(i in 1:M){
   write.csv(X_mk$X_MK[,,i],paste0('/Data/X_k',i,'.csv'),row.names = F))
@@ -30,7 +30,7 @@ write.table(X_mk$Index,paste0('/Data/Index.csv'),row.names = F, col.names = F)
 - **scaled:** Logical indicating whether continuous variables have been normalized. The default is TRUE.<br/>
 - **subsample:** Logical indicating whether subsampling should be performed for SHAP value calculation. The default is TRUE. <br/>
 
-This function will return a list containing your original data, the generated knockoff data, and subsampling indices.<br/>
+This function (`generate_knockoff`) will return a list containing your original data, the generated knockoff data, and subsampling indices.<br/>
 
 **Step2:** Compute feature imporatnce using `calculate_fi` function in the `Knockoff-ML_FI.ipynb` file. <br/>
 ```bash
@@ -49,6 +49,8 @@ calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], M=5, kop
 - **kopath:** Path to the knockoff data. Please ensure that each knockoff dataset is saved as a CSV file following the naming convention `X_ki.csv`, where i denotes the i-th knockoff.<br/>
 - **outpath:** Path to save feature impoatance.<br/>
 
+The function (`calculate_fi`) will write .csv files of feature importance for each ML model.<br/>
+
 **Note:** Knockoff-ML is a flexible framework that can incorporate various type of machine learning models, you can choose any machine learning models suitable for your work.<br/>
 
 **Step3:** Identify features with FDR control using `Get_select_info` function in the `Knockoff_ML.R` file.<br/>
@@ -56,18 +58,22 @@ calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], M=5, kop
 #load data
 X <- read.csv('/Data/X.csv')
 M <- 5
+#feature selection with FDR control
 for(model in c("catb","ligb","xgb","gbdt","rf")){
   FI <- read.csv(paste0('/Data/',model,'_fi.csv'))
-  Select_info <- Get_select_info(Feature_name=colnames(X),t(FI[1,]),FI[2:M+1,],M,fdr=0.1),
+  Select_info <- Get_select_info(Feature_name=colnames(X),T_0=t(FI[1,]),T_K=FI[2:M+1,],M=M,fdr=0.1),
   write.csv(Select_info,paste0('/Data/',model,'_select.csv'),row.names = F)
   }
 ```
-- **X:** Original dataset. <br/>
 - **FI:** An (M+1)*p data frame, where M is the number of knockoffs, and p is the number of features. The first row of FI should contain the feature importance for the original data, and rows 2 through M+1 should contain the feature importance for the knockoff data. <br/>
+- **Feature name:** The feature names of the original dataset.<br/>
+- **X:** Original dataset. <br/>
+- **T_0:** A numeric vector of length p for the feature importance of p features in the original dataset.
+- **T_K:** An M*p data frame for the feature importance of p features in each knockoff dataset.
 - **M:** A positive integer for the number of knockoffs.<br/>
 - **fdr:** A real number in a range of (0,1) indicating the target FDR level. The default is 0.1.<br/>
 
-This function will return a data frame including information about knockoff statistics and selection results.<br/>
+The function (`Get_select_info`) will return a data frame including information about knockoff statistics and selection results.<br/>
 
 **Step4:** Train prediction models and return prediction results using `koml_prediction` function in the `Knockoff-ML_Prediction.ipynb` file with identified features by Knockoff-ML.<br/>
 ```bash
@@ -82,6 +88,8 @@ koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], colpath='/Da
 - **models:** A list of ML models used within Knockoff-ML.<br/>
 - **colpath:** Path to feature selection information obtained in **Step3**.<br/>
 - **outpath:** Path to save prediction results.<br/>
+
+The function (`koml_prediction`) will write .csv files of prediction results for each ML model.<br/>
 
 ## Example data:
 Note that data access to the MIMIC IV need Data Use Agreement with PhysioNet. We are unable to provide the datasets directly in this repository. However, for your convenience, we've included an example dataset in the `Data.zip` file. You can use this example data to reproduce and test the workflow demonstrated in our code.
