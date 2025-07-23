@@ -14,7 +14,7 @@
 ```bash
 X_mk <- generate_knockoff(X, M=5, corr_max=0.75, scaled=TRUE, seed=12345, subsample=TRUE)
 ```
-X represents your original dataset, M is the number of multiple knockoffs. This function will return a list containing your original data, the generated knockoff data, and subsampling indices.
+X represents your original dataset, M is the number of multiple knockoffs. This function will return a list containing your original data, the generated knockoff data, and subsampling indices.<br/>
 **Step2:** Compute feature imporatnce using functions in the `Knockoff_ML_FI.ipynb` file. <br/>
 Note: Knockoff-ML is a flexible framework that can incorporate various type of machine learning models, you can choose any machine learning models suitable for your work.<br/>
 **Step3:** Identify features with FDR control using Get_select_info function in the Knockoff_ML.R file.<br/>
