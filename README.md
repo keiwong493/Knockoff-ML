@@ -60,6 +60,12 @@ calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=T
 **Step3:** Identify features with FDR control using `Get_select_info` function in the `Knockoff_ML.R` file.<br/>
 
 The function (`Get_select_info`) will return a data frame including information about knockoff statistics and selection results. The `Select_info` will be saved as .csv files following the naming convention `model_name`_select.csv, where `model_name` denotes the ML model used within Knockoff-ML.<br/>
+
+The function (`Get_select_info`) will return a p*4 data frame.
+- **column1 'Feature':** the feature names of the original data.
+- **column2 'w':** knockoff w statistics.
+- **column3 'q':** knockoff q values.
+- **column4 'select':** logical whether the features should be selected or not.
 ```bash
 #load data
 X <- read.csv('/Data/X.csv')
@@ -71,12 +77,6 @@ for(model in c("catb","ligb","xgb","gbdt","rf")){
   Select_info <- Get_select_info(Feature_name=colnames(X),T_0=t(FI[1,]),T_K=FI[2:M+1,],M=M,fdr=0.1),
   write.csv(Select_info,paste0('/Data/',model,'_select.csv'),row.names = F)
   }
-
-# The function (`Get_select_info`) will return a p*4 data frame.
-# col1 Feature: the features names of original data.
-# col2 w: knockoff w statistics.
-# col3 q: knockoff q values.
-# col4 select: logical whether the features should be selected or not.
 ```
 - **FI:** An (M+1)*p data frame, where M is the number of knockoffs, and p is the number of features. The first row of FI should contain the feature importance for the original data, and rows 2 through M+1 should contain the feature importance for the knockoff data. <br/>
 - **Feature name:** The feature names of the original dataset.<br/>
@@ -89,6 +89,10 @@ for(model in c("catb","ligb","xgb","gbdt","rf")){
 **Step4:** Train prediction models and return prediction results using `koml_prediction` function in the `Knockoff-ML_Prediction.ipynb` file with identified features by Knockoff-ML.<br/>
 
 The function (`koml_prediction`) will return a data frame containing prediction results. The prediction results will be saved as .csv files following the naming convention `model_name`_prediction.csv, where `model_name` denotes the ML model used within Knockoff-ML.<br/>
+
+The function (`koml_prediction`) will return an n*2 data frame, where n is the number of rows in original data X.
+- **column1 'Actual':** the actual outcome.
+- **column2 'Predicted':** the predicted probabilities for binary classification or the predicted values for regression.
 ```bash
 #load data 
 X = pd.read_csv('/Data/X.csv')
@@ -97,10 +101,7 @@ y = pd.read_csv('/Data/y_dict.csv')
 #Train prediction models and return prediction results
 koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True, colpath='/Data',outpath='/Data')
 
-# The function (`koml_prediction`) will return a data frame.
-# col1 Actual: the actual outcome.
-# col2 Predicted: the predicted probabilities for binary classification or
-# the predicted values for regression.
+
 ```
 - **X:** Original dataset. <br/>
 - **y:** Outcome of interest.<br/>
