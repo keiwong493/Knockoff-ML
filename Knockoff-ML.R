@@ -238,8 +238,6 @@ Get_select_info<-function(Feature_name,T_0,T_K,M=5,fdr=0.1){
   thr.w<-MK.threshold.byStat(out$kappatau[,1],out$kappatau[,2],M=M,fdr=fdr)
   highlight<-which(out$w>=thr.w)
   output<-data.frame(feature=Feature_name,
-                     kappa=out$kappatau[,1],
-                     tau=out$kappatau[,2],
                      w=as.vector(out$w),
                      q=as.vector(out$q),
                      threshold.w=thr.w,
