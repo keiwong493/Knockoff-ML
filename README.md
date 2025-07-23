@@ -4,7 +4,7 @@
 ![flowchart2](https://github.com/user-attachments/assets/7c8373e5-4ee0-49d2-bacc-0a539304528d)
 ---
 ## Repo Contents:
-* `Knockoff_ML.R`: R scripts for generating multiple knockoffs and calculating knockoff statistics for controlled variable selection.
+* `Knockoff-ML.R`: R scripts for generating multiple knockoffs and calculating knockoff statistics for controlled variable selection.
 * `Knockoff-ML_FI.ipynb`: Python notebook for computing feature importance, leveraging SHAP values.
 * `Knockoff-ML_Prediction.ipynb`: Python notebook for risk prediction with features identifeid by Knockoff-ML.
 * `Data.zip`: An example dataset which contains original data, knockoff data, outcome, subsampling indices, feature importance, selection information, and prediction results. This dataset can be used to test the workflow code.
