@@ -18,7 +18,7 @@ sparse.cov.cross <- function(x,y){
   list(cov=covmat)
 }
 
-create.MK.original <- function(X,M=5,corr_max=0.75) {
+create.MK <- function(X,M=5,corr_max=0.75) {
   
   X <- as.matrix(X)
   sparse.fit <- sparse.cor(X)
@@ -118,7 +118,7 @@ generate_knockoff <- function(X,M=5,corr_max=0.75,scaled=FALSE,seed=12345,subsam
   X<-as.matrix(X)
   
   #generate knockoff
-  X_MK<-create.MK.original(X,M=M,corr_max=corr_max)
+  X_MK<-create.MK(X,M=M,corr_max=corr_max)
 
   #subsample for faster shap values calculation
   if(subsample){
