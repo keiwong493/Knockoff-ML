@@ -80,12 +80,11 @@ for(model in c("catb","ligb","xgb","gbdt","rf")){
   write.csv(Select_info,paste0('/Data/',model,'_select.csv'),row.names = F)
   }
 
-# The function (`Get_select_info`) will return a p*5 data frame
+# The function (`Get_select_info`) will return a p*4 data frame
 # col1 Feature: the features names of original data.
 # col2 w: knockoff w statistics.
 # col3 q: knockoff q values.
-# col4 threshold.w: the threshold for feature selection at target FDR level.
-# col5 select: logical whether the features should be selected or not.
+# col4 select: logical whether the features should be selected or not.
 
 # The `Select_info` will be saved as CSV files following the naming convention `model_name`_select.csv,
 # where `model_name` denotes the ML model used within Knockoff-ML.
