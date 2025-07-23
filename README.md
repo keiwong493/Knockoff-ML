@@ -38,6 +38,7 @@ write.table(X_mk$Index,paste0('/Data/Index.csv'),row.names = F, col.names = F)
 
 The function (`calculate_fi`) will return an (M+1)*p data frame which contains feature importance for each specific ML model. M is the number of knockoffs, and p is the number of features. The first row of the data frame will contain the feature importance for the original data, and rows 2 through M+1 will contain the feature importance for the knockoff data. These data frames will be saved as .csv files following the naming convention `model_name`_fi.csv, where `model_name` denotes the ML model used within Knockoff-ML. <br/>
 ```bash
+#dichotomous classification task
 #load data 
 X = pd.read_csv('/Data/X.csv')
 y = pd.read_csv('/Data/y_dict.csv')
@@ -45,6 +46,15 @@ index = pd.read_csv('/Data/Index.csv', header=None)
 
 #calculate feature importance
 calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True, M=5, kopath='/Data', outpath='/Data')
+
+#quantitative regression task
+#load data 
+X = pd.read_csv('/Data/X.csv')
+y = pd.read_csv('/Data/y_quan.csv')
+index = pd.read_csv('/Data/Index.csv', header=None)
+
+#calculate feature importance
+calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=False, M=5, kopath='/Data', outpath='/Data')
 ```
 - **X**: Original dataset. <br/>
 - **y**: Outcome of interest.<br/>
@@ -94,12 +104,21 @@ The function (`koml_prediction`) will return an n*2 data frame, where n is the n
 - **column1 'Actual':** the actual outcome.
 - **column2 'Predicted':** the predicted probabilities for binary classification or the predicted values for regression.
 ```bash
-#load data 
+#dichotomous classification task
+#load data
 X = pd.read_csv('/Data/X.csv')
 y = pd.read_csv('/Data/y_dict.csv')
 
 #Train prediction models and return prediction results
 koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True, colpath='/Data',outpath='/Data')
+
+#quantitative regression task
+#load data
+X = pd.read_csv('/Data/X.csv')
+y = pd.read_csv('/Data/y_quan.csv')
+
+#Train prediction models and return prediction results
+koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=False, colpath='/Data',outpath='/Data')
 ```
 - **X:** Original dataset. <br/>
 - **y:** Outcome of interest.<br/>
@@ -109,7 +128,7 @@ koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True,
 - **outpath:** Path to save prediction results.<br/>
 
 ## Example data
-Note that data access to the MIMIC IV need Data Use Agreement with PhysioNet. We are unable to provide the datasets directly in this repository. However, for your convenience, we've included an example dataset in the `Data.zip` file. You can use this example data to reproduce and test the workflow demonstrated in our code.
+Note that data access to the MIMIC IV need Data Use Agreement with PhysioNet. We are unable to provide the datasets directly in this repository. However, for your convenience, we've included an example dataset in the `Data.zip` file. You can use this example data to reproduce and test the workflow demonstrated in our code. The results files provided in the `Data.zip` were generated specifically from a dichotomous classification task.
 
 ## Dependencies
 The code should run with the following environment.
