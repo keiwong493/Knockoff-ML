@@ -9,7 +9,7 @@
 
 ---
 
-## Workflow Steps
+## Workflow Steps:
 **Step1:** Generate multiple knockoffs using `generate_knockoff` function from `Knockoff_ML.R` file.<br/>
 ```bash
 X_mk <- generate_knockoff(X, M=5, corr_max=0.75, scaled=TRUE, seed=12345, subsample=TRUE)
@@ -23,4 +23,4 @@ Select_info <- Get_select_info(Feature_name=colnames(X),t(FI[1,]),FI[2:6,],M=5,f
 ```
 FI should be an (M+1)*p data frame, where M is the number of knockoffs, and p is the number of features. The first row of FI should contain the feature importance for the original data, and rows 2 through M+1 should contain the feature importance for the knockoff data. This function will return a data frame including information about knockoff statistics and selection results.<br/>
 **Step4:** Train prediction models using identified features by Knockoff-ML.<br/>
-**Example data:** Note that data access to the MIMIC IV need Data Use Agreement with PhysioNet. We do not provide the datasets directly in this repository. However, for your convenience, we've included an example dataset in the `Data.zip` file. You can use this example data to reproduce and test the workflow demonstrated in our code.
+**Example data:** Note that data access to the MIMIC IV need Data Use Agreement with PhysioNet. We are unable to provide the datasets directly in this repository. However, for your convenience, we've included an example dataset in the `Data.zip` file. You can use this example data to reproduce and test the workflow demonstrated in our code.
