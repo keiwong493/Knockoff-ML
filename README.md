@@ -47,7 +47,7 @@ calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], M=5, kop
 - **models**: A list of ML models used within Knockoff-ML.<br/>
 - **M**: A positive integer for the number of knockoffs.<br/>
 - **kopath:** Path to the knockoff data. Please ensure that each knockoff dataset is saved as a CSV file following the naming convention `X_ki.csv`, where i denotes the i-th knockoff.<br/>
-- **outpath:** Path to save feature impoatance.<br/>
+- **outpath:** Path to save feature importance.<br/>
 
 The function (`calculate_fi`) will write .csv files of feature importance for each ML model.<br/>
 
