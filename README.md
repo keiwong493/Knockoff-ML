@@ -7,7 +7,7 @@
 * `Knockoff-ML.R`: R scripts for generating multiple knockoffs and calculating knockoff statistics for controlled variable selection.
 * `Knockoff-ML_FI.ipynb`: Python notebook for computing feature importance, leveraging SHAP values.
 * `Knockoff-ML_Prediction.ipynb`: Python notebook for risk prediction with features identified by Knockoff-ML.
-* `Data.zip`: An example dataset which contains original data, knockoff data, outcome, subsampling indices, feature importance, selection information, and prediction results. This dataset can be used to test the workflow code.
+* `Data.zip`: An example dataset which contains the original data, knockoff data, outcome, subsampling indices, feature importance, selection information, and prediction results. This dataset can be used to test the workflow code.
 
 ---
 
