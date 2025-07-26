@@ -38,7 +38,7 @@ write.table(X_mk$Index,paste0('/Data/Index.csv'),row.names = F, col.names = F)
 
 The function (`calculate_fi`) will return an (M+1)*p data frame which contains feature importance for each specific ML model. M is the number of knockoffs, and p is the number of features. The first row of the data frame will contain the feature importance for the original data, and rows 2 through M+1 will contain the feature importance for the knockoff data. These data frames will be saved as .csv files following the naming convention `model_name`_fi.csv, where `model_name` denotes the ML model used within Knockoff-ML. <br/>
 ```bash
-#dichotomous classification task
+#dichotomous trait
 #load data 
 X = pd.read_csv('/Data/X.csv')
 y = pd.read_csv('/Data/y_dict.csv')
@@ -47,7 +47,7 @@ index = pd.read_csv('/Data/Index.csv', header=None)
 #calculate feature importance
 calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True, M=5, kopath='/Data', outpath='/Data')
 
-#quantitative regression task
+#quantitative trait
 #load data 
 X = pd.read_csv('/Data/X.csv')
 y = pd.read_csv('/Data/y_quan.csv')
@@ -59,7 +59,7 @@ calculate_fi(X, y, index, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=F
 - **X**: Original dataset. <br/>
 - **y**: Outcome of interest.<br/>
 - **index**: Index for subsampling in SHAP calculation.<br/>
-- **models**: A list of ML models used within Knockoff-ML.<br/>
+- **models**: A list of ML models used within Knockoff-ML. You can choose one or more of the following models: 'catb', categorical boosting; 'ligb', light gradient boosting machine; 'xgb', extreme gradient boosting; 'gbdt', gradient boosting decision trees; 'rf', random forest; 'svm', support vector machine; 'nn', neural networks; 'knn', k-nearest neighbors; 'linear', linear regression only for quantitative trait; 'logistic', logistic regression only for dichotomous trait. <br/>
 - **binary**: Logical indicating whether the outcome y is binary or continuous. The default value is True.<br/>
 - **M**: A positive integer for the number of knockoffs.<br/>
 - **kopath:** Path to the knockoff data. Please ensure that each knockoff dataset is saved as a .csv file following the naming convention `X_ki.csv`, where i denotes the i-th knockoff.<br/>
@@ -104,7 +104,7 @@ The function (`koml_prediction`) will return an n*2 data frame, where n is the n
 - **column1 'Actual':** the actual outcome.
 - **column2 'Predicted':** the predicted probabilities for binary classification or the predicted values for regression.
 ```bash
-#dichotomous classification task
+#dichotomous trait
 #load data
 X = pd.read_csv('/Data/X.csv')
 y = pd.read_csv('/Data/y_dict.csv')
@@ -112,7 +112,7 @@ y = pd.read_csv('/Data/y_dict.csv')
 #Train prediction models and return prediction results
 koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=True, colpath='/Data',outpath='/Data')
 
-#quantitative regression task
+#quantitative trait
 #load data
 X = pd.read_csv('/Data/X.csv')
 y = pd.read_csv('/Data/y_quan.csv')
@@ -122,7 +122,7 @@ koml_prediction(X, y, models=['catb', 'ligb', 'xgb', 'gbdt', 'rf'], binary=False
 ```
 - **X:** Original dataset. <br/>
 - **y:** Outcome of interest.<br/>
-- **models:** A list of ML models used within Knockoff-ML.<br/>
+- **models:** A list of ML models used within Knockoff-ML. You can choose one or more of the following models: 'catb', categorical boosting; 'ligb', light gradient boosting machine; 'xgb', extreme gradient boosting; 'gbdt', gradient boosting decision trees; 'rf', random forest; 'svm', support vector machine; 'nn', neural networks; 'knn', k-nearest neighbors; 'linear', linear regression only for quantitative trait; 'logistic', logistic regression only for dichotomous trait. <br/>
 - **binary**: Logical indicating whether the outcome y is binary or continuous. The default value is True.<br/>
 - **colpath:** Path to feature selection information obtained in **Step3**.<br/>
 - **outpath:** Path to save prediction results.<br/>
